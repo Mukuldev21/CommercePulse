@@ -3,8 +3,8 @@ services:
   mokapi:
     image: mokapi/mokapi:latest
     ports:
-      - "80:80"
+      - "8080:8080"
       - "3051:3051"
     volumes:
       - ./mokapi:/etc/mokapi
-    command: ["--config", "/etc/mokapi/mokapi.yaml"]
+    command: ["--providers-file-filename=/etc/mokapi/openapi.yaml"]

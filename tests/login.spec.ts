@@ -1,8 +1,14 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../src/pages/login.page';
 
-test('login test', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.navigate();
-    // Add login steps here
+test('verify mokapi connectivity', async ({ request }) => {
+    // Verify we can fetch users from the mock service
+    const response = await request.get('/api/users');
+    expect(response.ok()).toBeTruthy();
+
+    const data = await response.json();
+    console.log('Received Mock Data:', data);
+
+    // Basic validation of the mock structure
+    expect(data.users).toBeDefined();
+    expect(Array.isArray(data.users)).toBeTruthy();
 });
