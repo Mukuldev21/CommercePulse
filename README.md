@@ -1,112 +1,155 @@
-## 📦 CommercePulse — Microservices Testing & Synthetic Monitoring Framework
+# 📦 CommercePulse
+## Microservices Synthetic Monitoring & Testing Framework
 
-A complete sample project demonstrating microservices testing, synthetic monitoring, and mock-driven UI/API validation using:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Playwright](https://img.shields.io/badge/Playwright-1.40+-green.svg?logo=playwright&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6.svg?logo=typescript&logoColor=white)
+![Mokapi](https://img.shields.io/badge/Mokapi-Latest-orange.svg)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED.svg?logo=docker&logoColor=white)
 
-Playwright (TypeScript)
+---
 
-Mokapi.io for microservice mocking
+### 🚀 Overview
 
-Optional: Prometheus + Grafana (synthetic monitoring)
+**CommercePulse** is a robust, enterprise-grade framework designed to demonstrate advanced **Microservices Testing**, **Synthetic Monitoring**, and **Mock-Driven Development**. It simulates a complex e-commerce architecture (User, Product, Cart, Order, Payment) entirely locally, enabling high-fidelity isolated testing without the overhead of live backend infrastructure.
 
-This project simulates a real e-commerce microservices architecture and shows how QA Automation Engineers can test UI + APIs even without a real backend.
+This project serves as a reference implementation for:
+-   **QA Automation testing** for decoupled microservices.
+-   **Synthetic Monitoring** of critical business flows.
+-   **Chaos Engineering** simulation using dynamic mocks.
 
-## 🚀 Project Architecture
+---
 
-    CommercePulse mocks these services:
+### 🏗️ Architecture
 
-    User Service
+The system mimics a real-world distributed microservices environment. **Playwright** acts as the test runner and synthetic user, while **Mokapi** mocks the backend services, allowing for deterministic and flaky-test-free validation.
 
-    Product Service
+```mermaid
+graph TD
+    Client[Playwright / Synthetic User] -->|HTTP Interception| Proxy[Mokapi Gateway]
+    Proxy -->|Route /api/users| UserService[Mock: User Service]
+    Proxy -->|Route /api/products| ProductService[Mock: Product Service]
+    Proxy -->|Route /api/cart| CartService[Mock: Cart Service]
+    Proxy -->|Route /api/orders| OrderService[Mock: Order Service]
+    Proxy -->|Route /api/payment| PaymentService[Mock: Payment Service]
+```
 
-    Cart Service
+### 🛠️ Technology Stack
 
-    Order Service
+| Component | Technology | Role |
+| :--- | :--- | :--- |
+| **Test Runner** | [Playwright](https://playwright.dev/) | End-to-End & API Testing |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) | Type-safe development |
+| **Mock Server** | [Mokapi](https://mokapi.io/) | API Mocking & Chaos Simulation |
+| **Containerization** | [Docker](https://www.docker.com/) | Consistent environment setup |
+| **Monitoring** | [Prometheus](https://prometheus.io/) | Metrics collection (Optional) |
+| **Visualization** | [Grafana](https://grafana.com/) | Test result dashboards (Optional) |
 
-    Payment Service
+---
 
-All microservices are mocked using Mokapi, and Playwright interacts with them through route interception & mocked HTTP calls.
+### 📂 Folder Structure
 
+```
+commercepulse/
+├── mokapi/                  # 🛠️ Service Mocks Configuration
+│   ├── mokapi.yaml          # Main configuration file
+│   └── data/                # Static data fixtures
+│       ├── users.json
+│       ├── products.json
+│       └── orders.json
+├── src/                     # 🧪 Test Automation Source
+│   ├── pages/               # Page Object Models (POM)
+│   └── fixtures/            # Test Data & Custom Fixtures
+├── tests/                   # 🧪 Test Specifications
+│   └── login.spec.ts
+│   └── checkout.spec.ts
+├── playwright.config.ts     # Framework Configuration
+├── package.json             # Dependencies
+├── Dockerfile               # (Optional)
+├── docker-compose.yml       # 🐳 Container Orchestration
+└── README.md                # 📄 Documentation
+```
 
-## 📁 Folder Structure
+---
 
+### 🧩 Key Features
 
-    commercepulse/
-    │
-    ├── mokapi/   #Mokapi microservices mocks
-    │   ├── mokapi.yaml    #Full mock config
-    │   └── data/
-    │       ├── users.json
-    │       ├── products.json
-    │       └── orders.json
-    │
-    ├── playwright/ #Playwright (TypeScript) 
-    │   ├── package.json
-    │   ├── tsconfig.json
-    │   ├── playwright.config.ts
-    │   ├── src/
-    │   │   ├── pages/
-    │   │   │   └── login.page.ts
-    │   │   └── fixtures/
-    │   │       └── mockResponses.ts
-    │   └── tests/  
-    │       ├── e2e/
-    │       │   ├── login.spec.ts
-    │       │   └── checkout.spec.ts
-    │
-    ├── docker-compose.yml# (Optional) Run Mokapi / Prometheus / Grafana
-    ├── README.md
+#### 1. Zero-Dependency Mocking
+Run full e-commerce flows without a single running backend service. Mokapi handles all routing, logic, and state management for:
+-   **User Service**: Authentication simulation.
+-   **Product Service**: Dynamic inventory catalogs.
+-   **Order Service**: Order creation and id generation logic.
 
+#### 2. Synthetic, Production-Grade Tests
+Playwright tests are designed not just for functional verification but for performance baselining.
+-   **Hybrid Testing**: Combines API-level heavy lifting with UI verification.
+-   **Network Interception**: Validates how the frontend handles delayed or failed API responses.
 
-## 🧩 Key Features
+#### 3. Chaos Engineering Ready
+The framework supports failure injection to test resilience:
+-   Simulate **503 Service Unavailable**.
+-   Introduce **High Latency** (Network throttling).
+-   Inject **Malformed JSON** responses.
 
-🔹 1. Mocked Microservices using Mokapi
+---
 
-    Fully local microservices simulation
+### ⚙️ Getting Started
 
-    Supports:
+#### Prerequisites
+-   [Node.js](https://nodejs.org/) (v16+)
+-   [Docker](https://www.docker.com/) (Recommended) OR [Mokapi CLI](https://mokapi.io/docs/installation)
 
-    Random responses
+#### Installation
 
-    Dynamic templating
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/yourusername/commercepulse.git
+    cd commercepulse
+    ```
 
-    Failure scenario testing
-    
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    npx playwright install --with-deps
+    ```
 
- 🔹 2. Playwright Synthetic Tests
+### ▶️ Usage
 
-    UI + API integration tests
+#### Option A: Running with Docker (Recommended)
+This starts both the mock server and runs the tests in a containerized environment.
 
-    API interception and mocking
+```bash
+docker-compose up -d
+```
 
-    Full checkout flow simulation
+#### Option B: Local Execution
 
-🔹 3. Optional Monitoring Stack
-
-    Prometheus for synthetic metrics
-
-    Grafana for dashboards
-
-## ⚙️ Setup Instructions
-
-1️⃣ Install Mokapi (CLI)
-
-You can run without Docker.
-
-    npm install -g mokapi
-
-Verify:
-
-    mokapi --version
-
-
-## ▶️ Start Mock Services
-
-Run Mokapi locally:
-
+1.  **Start Mock Services**
+    In a new terminal:
+    ```bash
     mokapi start --config ./mokapi/mokapi.yaml
+    ```
 
-This starts mock services on:
+2.  **Run Tests**
+    ```bash
+    npx playwright test
+    ```
 
-    
+3.  **View Report**
+    ```bash
+    npx playwright show-report
+    ```
 
+---
 
+### 🧪 Testing Strategy
+
+The project utilizes a pyramid testing approach:
+
+-   **E2E (Top)**: Critical user paths (Login -> Checkout).
+-   **Integration (Middle)**: API contract testing against mocks.
+-   **Visual Regression (Optional)**: Snapshot testing for UI components.
+
+---
+**Author**: Mukul
+**License**: MIT
