@@ -1,1 +1,46 @@
 # Mokapi configuration
+
+
+server:
+  port: 3051
+
+mocks:
+  - id: user-service
+    name: user-service
+    url: /api/users
+    fixtures:
+      - file: ./data/users.json
+
+  - id: product-service
+    name: product-service
+    url: /api/products
+    fixtures:
+      - file: ./data/products.json
+
+  - id: cart-service
+    name: cart-service
+    url: /api/cart
+    routes:
+      - method: POST
+        url: /api/cart/add
+        status: 200
+        body: { "success": true }
+
+  - id: order-service
+    name: order-service
+    url: /api/orders
+    routes:
+      - method: POST
+        url: /api/orders/create
+        status: 201
+        body: { "orderId": "order_{{randInt 1000 9999}}", "status": "created" }
+
+  - id: payment-service
+    name: payment-service
+    url: /api/payment
+    routes:
+      - method: POST
+        url: /api/payment/charge
+        status: 200
+        body: { "status": "paid", "transactionId": "txn_{{randInt 100000 999999}}" }
+
