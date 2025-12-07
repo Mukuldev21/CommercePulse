@@ -3,8 +3,10 @@ services:
   mokapi:
     image: mokapi/mokapi:latest
     ports:
-      - "8080:8080"
+      - "6666:6666"
       - "3051:3051"
+    environment:
+      - MOKAPI_API_PORT=6666
     volumes:
       - ./mokapi:/etc/mokapi
     command: ["--providers-file-filename=/etc/mokapi/openapi.yaml"]
