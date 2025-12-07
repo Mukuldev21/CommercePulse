@@ -1,3 +1,10 @@
 version: '3'
 services:
-  # Mokapi service will be added here
+  mokapi:
+    image: mokapi/mokapi:latest
+    ports:
+      - "80:80"
+      - "3051:3051"
+    volumes:
+      - ./mokapi:/etc/mokapi
+    command: ["--config", "/etc/mokapi/mokapi.yaml"]

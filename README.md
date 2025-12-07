@@ -97,7 +97,8 @@ The framework supports failure injection to test resilience:
 
 #### Prerequisites
 -   [Node.js](https://nodejs.org/) (v16+)
--   [Docker](https://www.docker.com/) (Recommended) OR [Mokapi CLI](https://mokapi.io/docs/installation)
+-   [Docker](https://www.docker.com/) (Recommended)
+-   *Optional (if not using Docker)*: [Mokapi Binary](https://github.com/mokapi/mokapi/releases)
 
 #### Installation
 
@@ -116,18 +117,21 @@ The framework supports failure injection to test resilience:
 ### ▶️ Usage
 
 #### Option A: Running with Docker (Recommended)
-This starts both the mock server and runs the tests in a containerized environment.
+This starts both the mock server and runs the tests in a containerized environment (if configured) or simply starts the mocks so you can run tests locally.
 
 ```bash
 docker-compose up -d
 ```
 
-#### Option B: Local Execution
+#### Option B: Local Binary Execution
 
-1.  **Start Mock Services**
+1.  **Install Mokapi**
+    Download the latest binary from [Mokapi Releases](https://github.com/mokapi/mokapi/releases) and add it to your PATH.
+
+2.  **Start Mock Services**
     In a new terminal:
     ```bash
-    mokapi start --config ./mokapi/mokapi.yaml
+    mokapi --config ./mokapi/mokapi.yaml
     ```
 
 2.  **Run Tests**
