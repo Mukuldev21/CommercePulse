@@ -1,0 +1,16 @@
+{
+    "name": "commercepulse-playwright",
+    "version": "1.0.0",
+    "description": "Playwright tests for CommercePulse",
+    "main": "index.js",
+    "scripts": {
+        "test": "playwright test"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@playwright/test": "^1.40.0",
+        "typescript": "^5.0.0"
+    }
+}
